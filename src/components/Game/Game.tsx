@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { setDefaultLayout, move } from '../../core/board';
 import { type Board as B, type Position } from '../../core/types'; // ваша логика
 import Board from '../Board/Board';
+import { Captured } from '../CapturedList/Captured';
 
 export default function Game() {
   const [board, setBoard] = useState<B>(setDefaultLayout());
@@ -27,5 +28,10 @@ export default function Game() {
     }
   };
 
-  return <Board board={board} selected={selected} onSquareClick={handleSquareClick} />;
+  return (
+    <div>
+      <Board board={board} selected={selected} onSquareClick={handleSquareClick} />
+      <Captured capturedPieces={board.capturedPieces} />
+    </div>
+    );
 }

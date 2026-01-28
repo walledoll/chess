@@ -111,9 +111,6 @@ export const isLegalMove = (from: Position, to: Position, board: Board): boolean
             if (!validKingMove) {
                 return false;
             }
-            if(!isEmptySquare(to, board)) {
-                return false;
-            }
             return true;
         }
         case 'knight': {
@@ -150,13 +147,26 @@ export const isPathClear = (from: Position, to: Position, board: Board) => {
 export const move = (from: Position, to: Position, board: Board): Board | null => {
     const newBoard: Board = JSON.parse(JSON.stringify(board));
     const piece = newBoard.grid[from.row][from.col];
-    if(!isLegalMove(from, to, board)){
+    const targetPiece = newBoard.grid[to.row][to.col];
+
+    if(!isLegalMove(from, to, board) || !piece){
         return null;
+    }
+
+    if(piece.color !== board.sideToMove) {
+        return null;
+    }
+
+    if(targetPiece) {
+        newBoard.capturedPieces.push(targetPiece);
     }
 
     clearSquare(from, newBoard.grid);
     setSquare(to, piece, newBoard.grid);
-    return newBoard
+    newBoard.lastMove = {from, to, piece};
+    newBoard.moveHistory.push({from, to, piece});
+    newBoard.sideToMove = newBoard.sideToMove === 'white' ? 'black' : 'white';
+    return newBoard;
 }
 
 export const clearSquare = (pos: Position, grid: (Piece | null)[][]) => {
@@ -242,4 +252,22 @@ export const printBoard = (board: Board) => {
 
 export const getPossibleMoves = () => {
 
+}
+
+export function getPieceSymbol(piece: Piece): string {
+  const symbols: Record<string, string> = {
+    'white-pawn': '♙',
+    'white-rook': '♖',
+    'white-knight': '♘',
+    'white-bishop': '♗',
+    'white-queen': '♕',
+    'white-king': '♔',
+    'black-pawn': '♟',
+    'black-rook': '♜',
+    'black-knight': '♞',
+    'black-bishop': '♝',
+    'black-queen': '♛',
+    'black-king': '♚',
+  };
+  return symbols[`${piece.color}-${piece.type}`] || '';
 }

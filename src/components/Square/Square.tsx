@@ -1,3 +1,4 @@
+import { getPieceSymbol } from "../../core/board";
 import type { Piece } from "../../core/types";
 import styles from './Square.module.scss'
 
@@ -17,20 +18,3 @@ export const Square = ({isDark, piece, isSelected, onClick}: ISquare) => {
     )
 }
 
-function getPieceSymbol(piece: Piece): string {
-  const symbols: Record<string, string> = {
-    'white-pawn': '♙',
-    'white-rook': '♖',
-    'white-knight': '♘',
-    'white-bishop': '♗',
-    'white-queen': '♕',
-    'white-king': '♔',
-    'black-pawn': '♟',
-    'black-rook': '♜',
-    'black-knight': '♞',
-    'black-bishop': '♝',
-    'black-queen': '♛',
-    'black-king': '♚',
-  };
-  return symbols[`${piece.color}-${piece.type}`] || '';
-}
