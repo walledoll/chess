@@ -147,6 +147,29 @@ export const isPathClear = (from: Position, to: Position, board: Board) => {
     return true;
 }
 
+export const move = (from: Position, to: Position, board: Board): Board | null => {
+    const newBoard: Board = JSON.parse(JSON.stringify(board));
+    const piece = newBoard.grid[from.row][from.col];
+    if(!isLegalMove(from, to, board)){
+        return null;
+    }
+
+    clearSquare(from, newBoard.grid);
+    setSquare(to, piece, newBoard.grid);
+    return newBoard
+}
+
+export const clearSquare = (pos: Position, grid: (Piece | null)[][]) => {
+    grid[pos.row][pos.col] = null;
+}
+
+export const setSquare = (pos: Position, piece: Piece | null, grid: (Piece | null)[][]) => {
+    if(!piece) { 
+        return null;
+    }
+    grid[pos.row][pos.col] = piece;
+}
+
 export const setDefaultLayout = (): Board => {
     const board: Board = {
         grid: Array(8).fill(null).map(() => Array(8).fill(null)),
@@ -203,7 +226,7 @@ export const printBoard = (board: Board) => {
     },
   };
   for (let row = 0; row < 8; row++) {
-    let line = `${8 - row} `; // нумерация строк: 8,7,...,1
+    let line = `${8 - row} `; 
     for (let col = 0; col < 8; col++) {
       const cell = board.grid[row][col];
       if (cell) {
@@ -216,3 +239,7 @@ export const printBoard = (board: Board) => {
   }
   console.log('   a b c d e f g h');
 };
+
+export const getPossibleMoves = () => {
+
+}
