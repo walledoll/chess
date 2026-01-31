@@ -5,6 +5,7 @@ export type Type = 'bishop' | 'knight' | 'pawn' | 'king' | 'queen' | 'rook';
 export interface Piece  {
   color: Color;
   type: Type;
+  hasMoved?: boolean;
 }
 
 export interface Position {
