@@ -1,18 +1,61 @@
-.square{
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    &.dark {
-        background-color: #b58863;
-    }
+.square {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+
+  &.light {
+    background-color: #f0d9b5;
+  }
+
+  &.dark {
+    background-color: #b58863;
+  }
+
+  &.selected {
+    background-color: #baca44 !important;
+  }
+
+  &.validMove {
+    background-color: rgba(186, 202, 68, 0.3);
+    
     &.light {
-        background-color: #f0d9b5;
+      background-color: rgba(240, 217, 181, 0.7);
     }
-    &.selected {
-        border: 3px solid darkorange;
+    
+    &.dark {
+      background-color: rgba(181, 136, 99, 0.7);
     }
+  }
+
+  &.check {
+    background-color: #ff6b6b !important;
+    animation: pulse 1s infinite;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.moveDot {
+  width: 20%;
+  height: 20%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  position: absolute;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    background-color: #ff6b6b;
+  }
+  50% {
+    background-color: #ff4444;
+  }
 }

@@ -6,15 +6,26 @@ export interface ISquare {
     isDark: boolean;
     piece: Piece | null;
     isSelected: boolean;
+    isValidMove: boolean;
+    isInCheck: boolean;
     onClick: () => void;
 }
 
-export const Square = ({isDark, piece, isSelected, onClick}: ISquare) => {
+export const Square = ({isDark, piece, isSelected, isValidMove, isInCheck, onClick}: ISquare) => {
     const pieceSymbol = piece ? getPieceSymbol(piece) : '';
     return(
-        <div className={`${styles.square} ${isDark ? styles.dark : styles.light} ${isSelected ? styles.selected: ''}`} onClick={onClick}>
+        <div 
+            className={`
+                ${styles.square} 
+                ${isDark ? styles.dark : styles.light} 
+                ${isSelected ? styles.selected : ''} 
+                ${isValidMove ? styles.validMove : ''}
+                ${isInCheck ? styles.check : ''}
+            `} 
+            onClick={onClick}
+        >
             {pieceSymbol}
+            {isValidMove && !piece && <div className={styles.moveDot} />}
         </div>
     )
 }
-
